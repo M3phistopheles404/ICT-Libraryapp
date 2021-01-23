@@ -9,7 +9,7 @@ const nav =[
         link:'./authors',name:'Authors'
     },
     {
-        link:'./addbook',name:'Add Book'
+        link:'./admin',name:'Add Book'
     },
     {
         link:'./addauthor',name:'Add Author'
@@ -22,14 +22,23 @@ const nav =[
     }
 ];
 
+const nav2 = [
+    {
+        link: '/signup', name: 'Sign Up'
+    },
+    {
+        link: '/login', name: 'Log In'
+    }
+];
+
 const booksRouter = require('./src/routes/bookRoutes')(nav)
 const authorsRouter = require('./src/routes/authorRoutes')(nav)
-const loginRouter = require('./src/routes/loginRoutes')(nav)
+const loginRouter = require('./src/routes/loginRoutes')(nav,nav2)
 const signupRouter = require('./src/routes/signupRoutes')(nav)
-const addBookRouter = require('./src/routes/addbookRoutes')(nav)
+const adminRouter = require('./src/routes/adminRoutes')(nav)
 const addauthorRouter = require('./src/routes/addauthorRoutes')(nav)
 
-
+app.use(express.urlencoded({extended:true})); 
 app.use(express.static('./public'));
 app.set('view engine','ejs');
 app.set('views','./src/views');
@@ -37,8 +46,8 @@ app.use('/books',booksRouter);
 app.use('/authors',authorsRouter);
 app.use('/login',loginRouter);
 app.use('/signup',signupRouter);
-app.use('/addbook',addBookRouter);
 app.use('/addauthor',addauthorRouter);
+app.use('/admin',adminRouter);
 app.get('/',function(req,res){
     res.render("index",
     {
